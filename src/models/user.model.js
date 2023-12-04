@@ -21,7 +21,7 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "user", "employee"],
+      enum: ["admin", "user", "staff"],
       default: "user",
     },
     attributes: {
@@ -33,6 +33,9 @@ const userSchema = new Schema(
     collection: COLLECTION_NAME,
   }
 );
+
+// Create index for search
+userSchema.index({ name: "text", email: "text" });
 
 const User = model(DOCUMENT_NAME, userSchema);
 

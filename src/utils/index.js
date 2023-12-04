@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import _ from "lodash";
+import { Types } from "mongoose";
 
 export const hashPassWord = async (password) => {
   const salt = await bcrypt.genSalt(10);
@@ -16,4 +17,8 @@ export const comparePassWord = async (password, hashPassWord) => {
 
 export const getFieldObject = (obj, fields = []) => {
   return _.pick(obj, fields);
+};
+
+export const convertToObjectId = (id) => {
+  return new Types.ObjectId(id);
 };

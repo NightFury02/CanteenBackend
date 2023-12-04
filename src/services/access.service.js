@@ -60,6 +60,10 @@ class AccessService {
     const user = await UserService.findUserByEmail(email);
     if (!user) throw new ErrorResponse("Credentials are invalid", 401);
 
+    // Check password
+    const isMatched = await comparePassWord(password, user.password);
+    if (!isMatched) throw new ErrorResponse("Credentials are invalid", 401);
+
     // Check user already login
     const key = await KeyStoreService.findByUserId(user._id);
 
@@ -71,10 +75,6 @@ class AccessService {
         token: key.token,
       };
     } else {
-      // Check password
-      const isMatched = await comparePassWord(password, user.password);
-      if (!isMatched) throw new ErrorResponse("Credentials are invalid", 401);
-
       // Create secretKey and token
       const secretKey = crypto.randomBytes(64).toString("hex");
       const encodeUser = getFieldObject(user, ["name", "email", "role", "_id"]);

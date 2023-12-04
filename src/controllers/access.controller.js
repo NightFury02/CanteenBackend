@@ -3,7 +3,7 @@ import AccessService from "../services/access.service.js";
 
 class AccessController {
   static async signUp(req, res) {
-    const role = req.user?.role === "admin" ? "employee" : "user";
+    const role = req.user?.role === "admin" ? "staff" : "user";
     const data = await AccessService.signUp(req.body, role);
 
     new SuccessResponse({
