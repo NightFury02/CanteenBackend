@@ -24,10 +24,10 @@ class inventoryItemService {
         results.push(newinventoryItem);
       }
     }
-
+    results.save();
     return results;
   }
-
+ 
   static async updateinventoryItem({ inventoryItemId, updateInfo }) {
     return updateinventoryItem({ inventoryItemId, updateInfo });
   }

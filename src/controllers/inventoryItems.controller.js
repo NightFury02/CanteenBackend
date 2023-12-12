@@ -11,15 +11,6 @@ class inventoryItemController {
     }).send(res);
   }
 
-  static async getinventoryItems(req, res) {
-    const results = await inventoryItemService.getinventoryItemByType(req.params.type);
-
-    new SuccessResponse({
-      message: "Get inventoryItems successfully!",
-      data: results,
-    }).send(res);
-  }
-
   static async updateinventoryItem(req, res) {
     const data = await inventoryItemService.updateinventoryItem({
       inventoryItemId: req.params.id,

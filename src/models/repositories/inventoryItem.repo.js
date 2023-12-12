@@ -8,9 +8,9 @@ const findinventoryItemById = async (id) => {
   return await inventoryItem.findOne({ _id: id }).lean();
 };
 
-const updateQuantityinventoryItem = async (name, quantity) => {
+const updateQuantityinventoryItem = async (Id, quantity) => {
   return await inventoryItem.findOneAndUpdate(
-    { inventoryItem_name: name },
+    { _id: Id },
     {
       $inc: {
         inventoryItem_quantity: quantity,
