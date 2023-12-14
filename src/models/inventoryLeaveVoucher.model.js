@@ -21,7 +21,6 @@ const inventoryLeaveVoucherSchema = new Schema(
         },
         time:{
             type: String,
-            required: true,
         }
     },
     {

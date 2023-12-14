@@ -1,7 +1,8 @@
 import inventoryLeaveVoucher from "../models/inventoryLeaveVoucher.model.js";
-import inventoryComeVoucher from "../models/inventoryComeVoucher.model.js";
+import inventoryComeVoucher from '../models/inventoryComeVoucher.model.js';
 import inventoryItem from "../models/inventoryItem.model.js";
 import inventoryDeleteVoucher from "../models/inventoryDeleteVoucher.model.js";
+
 import{
     updateQuantityinventoryItem, findinventoryItemById
 } from "../models/repositories/inventoryItem.repo.js"
@@ -16,7 +17,6 @@ class inventoryActivityService {
             inventoryItem_quantity: Quantity,
             inventoryItem_exp: Exp
         }) ;
-        newinventoryItem.create();
         const newComeItem = await inventoryComeVoucher.create({
             user_id: convertToObjectId(userId),
             itemName: Itemname,
@@ -42,19 +42,18 @@ class inventoryActivityService {
     }
     // Delete Voucher: Delete InventoryItem, time and deleter
     static async createDeleteVoucher(infoDvoucher) {
-        const { userId, itemId, Quantity, Time } = infoDvoucher;
-      
+        const { userId, itemId } = infoDvoucher;
+        const objectIdItemId = convertToObjectId(itemId);
+        const deleteItem = await findinventoryItemById(itemId);
+        const Quantity = deleteItem.inventoryItem_quantity;
+        const Time = (new Date()).toISOString().slice(0,10);
         const deleteItemAct = await inventoryDeleteVoucher.create({
           user_id: convertToObjectId(userId),
           inventoryItem: itemId,
           quantity: Quantity,
           time: Time,
         });
-      
-        const objectIdItemId = convertToObjectId(itemId);
-      
         await inventoryItem.findOneAndDelete({ _id: objectIdItemId });
-      
         return deleteItemAct;
       }
 }

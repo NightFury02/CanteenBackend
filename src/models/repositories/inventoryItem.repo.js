@@ -1,3 +1,4 @@
+import { convertToObjectId } from "../../utils/index.js";
 import inventoryItem from "../inventoryItem.model.js";
 
 const findinventoryItemByName = async (name) => {
@@ -5,12 +6,12 @@ const findinventoryItemByName = async (name) => {
 };
 
 const findinventoryItemById = async (id) => {
-  return await inventoryItem.findOne({ _id: id }).lean();
+  return await inventoryItem.findOne({ _id: convertToObjectId(id) }).lean();
 };
 
 const updateQuantityinventoryItem = async (Id, quantity) => {
   return await inventoryItem.findOneAndUpdate(
-    { _id: Id },
+    { _id: convertToObjectId(Id) },
     {
       $inc: {
         inventoryItem_quantity: quantity,
@@ -24,7 +25,7 @@ const updateQuantityinventoryItem = async (Id, quantity) => {
 };
 
 const updateinventoryItem = async ({ inventoryItemId, updateInfo }) => {
-  const filter = { _id: inventoryItemId };
+  const filter = { _id: convertToObjectId(inventoryItemId) } 
   const updateSet = { new: true, upsert: true };
 
   return await inventoryItem.findOneAndUpdate(filter, updateInfo, updateSet);

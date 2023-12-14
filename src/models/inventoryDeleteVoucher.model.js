@@ -20,7 +20,6 @@ const inventoryDeleteVoucherSchema = new Schema(
         },
         time:{
             type: String,
-            required: true,
         }
     },
     {
