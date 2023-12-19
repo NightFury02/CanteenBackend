@@ -9,6 +9,14 @@ class inventoryActivityController{
             data: data,
           }).send(res);
     }
+    static async getAllComeVoucher(req,res){
+        const data = await inventoryActivityService.getAllComeVoucher();
+        new SuccessResponse({
+            message: "Get All Come Voucher successfully!",
+            data: data,
+          }).send(res);
+
+    }
     static async createLeaveVoucher(req, res){
         const data = await inventoryActivityService.createLeaveVoucher(req.body);
         new SuccessResponse({
@@ -23,5 +31,6 @@ class inventoryActivityController{
             data: data,
           }).send(res);
     }
+    
 }
 export default inventoryActivityController;

@@ -4,16 +4,16 @@ import inventoryDeleteVoucher from "../inventoryDeleteVoucher.model"
 import inventoryLeaveVoucher from "../inventoryLeaveVoucher.model"
 
 
-// const findinventoryComeVoucherByIdAndTime = async (Id,Time) => {    
-//     return await inventoryComeVoucher.findOne({inventoryItem:Id,time:Time}).lean();
-// }; findinventoryComeVoucherByIdAndTime
-
-const findinventoryDeleteVoucherByIdAndTime  = async (Id,Time) => {
-    return await inventoryDeleteVoucher.find({inventoryItem:Id,time:Time}).lean();
+const findinventoryComeVoucherByTime = async(Time) =>{
+    return await inventoryComeVoucher.find({time:Time}).lean();
 };
 
-const findinventoryLeaveVoucherByIdAndTime = async(Id,Time) => {
-    return await inventoryLeaveVoucher.findOne({ inventoryItem:Id, time: Time }).lean();
-}
+const findinventoryDeleteVoucherTime  = async (Time) => {
+    return await inventoryDeleteVoucher.find({time:Time}).lean();
+};
 
-export {findinventoryDeleteVoucherByIdAndTime, findinventoryLeaveVoucherByIdAndTime }
+const findinventoryLeaveVoucherTime = async(Time) => {
+    return await inventoryLeaveVoucher.find({time: Time }).lean();
+};
+
+export {findinventoryComeVoucherByTime, findinventoryDeleteVoucherTime, findinventoryLeaveVoucherTime }

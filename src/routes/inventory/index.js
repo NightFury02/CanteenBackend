@@ -13,8 +13,9 @@ inventoryItemsRoute.post(
   checkRole(["staff"]),
   asyncHandler(inventoryItemController.createinventoryItems)
 );
-
-inventoryItemsRoute.get("/:type", asyncHandler(inventoryItemController.getinventoryItems));
+inventoryItemsRoute.get(
+  "/:all", asyncHandler(inventoryItemController.getAllinventoryItem)
+)
 
 inventoryItemsRoute.patch(
   "/:id",

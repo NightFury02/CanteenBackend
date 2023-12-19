@@ -10,7 +10,13 @@ class inventoryItemController {
       data: results,
     }).send(res);
   }
-
+  static async getAllinventoryItem(req, res) {
+    const data = await inventoryItemService.getAllinventoryItem();
+    new SuccessResponse({
+      message:"Completed get all inventoryItems",
+      data,
+    }).send(res)
+  }
   static async updateinventoryItem(req, res) {
     const data = await inventoryItemService.updateinventoryItem({
       inventoryItemId: req.params.id,

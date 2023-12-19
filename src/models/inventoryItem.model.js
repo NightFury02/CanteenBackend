@@ -17,6 +17,10 @@ const inventoryItemSchema = new Schema(
             type: String,
             required: true,
         },
+        cost: {
+            type: Number,
+            require: true
+        }
     },
     {
         timestamps: true,

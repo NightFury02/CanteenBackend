@@ -27,7 +27,6 @@ const updateQuantityinventoryItem = async (Id, quantity) => {
 const updateinventoryItem = async ({ inventoryItemId, updateInfo }) => {
   const filter = { _id: convertToObjectId(inventoryItemId) } 
   const updateSet = { new: true, upsert: true };
-
   return await inventoryItem.findOneAndUpdate(filter, updateInfo, updateSet);
 };
 

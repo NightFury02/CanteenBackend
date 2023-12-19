@@ -10,22 +10,30 @@ const inventoryComeVoucherSchema = new Schema(
             ref: "user",
             required: true,
         },
-        itemName:{
+        time: {
             type: String,
             required: true,
         },
-        quantity: {
-            type: Number,
-            required: true,
-        },
-        time:{
-            type: String,
-            required: true,
-        },
-        exp:{
-            type: String,
-            required: true,
-        }
+        come_list: [
+            {
+                itemName: {
+                    type: String,
+                    required: true,
+                },
+                quantity: {
+                    type: Number,
+                    required: true,
+                },
+                exp: {
+                    type: String,
+                    required: true,
+                },
+                cost: {
+                    type: Number,
+                    required: true,
+                },
+            }
+        ],
     },
     {
         timestamps: true,
