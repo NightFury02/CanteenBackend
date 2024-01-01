@@ -2,6 +2,7 @@ import inventoryLeaveVoucher from "../models/inventoryLeaveVoucher.model.js";
 import inventoryComeVoucher from '../models/inventoryComeVoucher.model.js';
 import inventoryItem from "../models/inventoryItem.model.js";
 import inventoryDeleteVoucher from "../models/inventoryDeleteVoucher.model.js";
+import item from "../models/item.model.js";
 
 import {
     updateQuantityinventoryItem, findinventoryItemById
@@ -11,10 +12,10 @@ import { convertToObjectId } from "../utils/index.js";
 class inventoryActivityService {
     // Come Voucher: (create new InventoryItem, created time, creator)
     static async createComeVoucher(infoCvoucher) {
-        const { userId, item_list, Time } = infoCvoucher;
+        const { userId, item_list} = infoCvoucher;
         const newComeVoucher = await inventoryComeVoucher.create({
             user_id: convertToObjectId(userId),
-            time: Time
+            come_list:{ type: Array, default: [] }
         });
         for (let item of item_list) {
             const newInventoryItem = await inventoryItem.create({
@@ -23,56 +24,66 @@ class inventoryActivityService {
                 inventoryItem_exp: item.inventoryItem_exp,
                 cost: item.cost
             });
-            newComeVoucher.come_list.push(newInventoryItem)
+            newComeVoucher.come_list.push(newInventoryItem);
         }
-        newComeVoucher.save();
-        return newComeItem;
+        await newComeVoucher.save();
+        return newComeVoucher;
     }
     static async getAllComeVoucher(){
-        return inventoryComeVoucher.find();
+        return inventoryComeVoucher.find({});
     }
     // Leave Voucher: update quantity of InventoryItem, time and updater
     static async createLeaveVoucher(infoLvoucher) {
-        const { userId, item_list, Time } = infoLvoucher;
-        const newLeaveVoucher = await inventoryLeaveVoucher.create({
-            user_id: convertToObjectId(userId),
-            time: Time
-        });
+        const { userId, item_list } = infoLvoucher;
         const leaveItemAct = await inventoryLeaveVoucher.create({
             user_id: convertToObjectId(userId),
-            inventoryItem: convertToObjectId(itemId),
-            quantity: Quantity,
-
+            leave_list:{ type: Array}
         });
-        for (let item of item_list) {
-            const newInventoryItem = await inventoryItem.create({
-                inventoryItem_name: item.inventoryItem_name,
-                inventoryItem_quantity: item.inventoryItem_quantity,
-                inventoryItem_exp: item.inventoryItem_exp,
-                cost: item.cost
+        for (let element of item_list) {
+            const invenItem = await findinventoryItemById(convertToObjectId(element.inventoryItem));
+            
+            const newItem = await item.create({
+                item_name: invenItem.inventoryItem_name,
+                item_price: element.price,
+                item_quantity: element.item_quantity,
+                item_cost: invenItem.cost,
+                item_type: "inven"
             });
-            newComeVoucher.come_list.push(newInventoryItem)
+            await updateQuantityinventoryItem(convertToObjectId(element.inventoryItem), - element.item_quantity);
+            leaveItemAct.leave_list.push({
+                inventoryItem: convertToObjectId(element.inventoryItem),
+                cost : invenItem.cost,
+                quantity:element.item_quantity,
+                price: element.price,
+            })
         }
-        const invenItem = await findinventoryItemById(convertToObjectId(itemId));
-        const newQuantity = invenItem.inventoryItem_quantity - Quantity;
-        updateQuantityinventoryItem(convertToObjectId(itemId), newQuantity);
+        await leaveItemAct.save();     
         return leaveItemAct;
+    }
+    static async getAllLeaveVoucher(){
+        return inventoryLeaveVoucher.find({});
+    }
+    static async getOneLeaveVoucher(Time){
+        return inventoryLeaveVoucher.findOne({createdAt: Time})
     }
     // Delete Voucher: Delete InventoryItem, time and deleter
     static async createDeleteVoucher(infoDvoucher) {
-        const { userId, itemId } = infoDvoucher;
-        const objectIdItemId = convertToObjectId(itemId);
-        const deleteItem = await findinventoryItemById(itemId);
-        const Quantity = deleteItem.inventoryItem_quantity;
-        const Time = (new Date()).toISOString().slice(0, 10);
+        const { userId, item_list } = infoDvoucher;
         const deleteItemAct = await inventoryDeleteVoucher.create({
             user_id: convertToObjectId(userId),
-            inventoryItem: itemId,
-            quantity: Quantity,
-            time: Time,
+            delete_list:{ type: Array, default: [] }
         });
-        await inventoryItem.findOneAndDelete({ _id: objectIdItemId });
+        for(let item of item_list){
+            var deleteItem = await findinventoryItemById(item.inventoryItem);
+            var Quantity = deleteItem.inventoryItem_quantity;
+            deleteItemAct.delete_list.push({inventoryItem: item.inventoryItem, quantity: Quantity});
+            await inventoryItem.findOneAndDelete({ _id: convertToObjectId(item.inventoryItem) });
+        }
+        await deleteItemAct.save();
         return deleteItemAct;
+    }
+    static async getAllDeleteVoucher(){
+        return inventoryDeleteVoucher.find({});
     }
 }
 export default inventoryActivityService;

@@ -14,12 +14,12 @@ const inventoryItemSchema = new Schema(
             required: true,
         },
         inventoryItem_exp: {
-            type: String,
+            type: Date,
             required: true,
         },
         cost: {
             type: Number,
-            require: true
+            require: true,
         }
     },
     {

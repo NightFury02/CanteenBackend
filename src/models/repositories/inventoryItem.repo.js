@@ -6,7 +6,7 @@ const findinventoryItemByName = async (name) => {
 };
 
 const findinventoryItemById = async (id) => {
-  return await inventoryItem.findOne({ _id: convertToObjectId(id) }).lean();
+  return await inventoryItem.findOne({ _id: id }).lean();
 };
 
 const updateQuantityinventoryItem = async (Id, quantity) => {

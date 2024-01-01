@@ -15,11 +15,11 @@ const itemSchema = new Schema(
     item_type: {
       type: String,
       required: true,
-      enum: ["main", "beverage", "other"],
+      enum: ["main", "inven"],
     },
     item_price: {
       type: Number,
-      required: true,
+      default: 25000,
     },
     item_quantity: {
       type: Number,
@@ -28,8 +28,8 @@ const itemSchema = new Schema(
     // The cost to make item
     item_cost: {
       type: Number,
-      default: 25000,
-    },
+      required: true,
+    }
   },
   {
     timestamps: true,

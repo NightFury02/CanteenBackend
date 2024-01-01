@@ -6,14 +6,9 @@ import {
 } from "../models/repositories/inventoryItem.repo.js";
 
 class inventoryItemService {
-  static async createinventoryItems(listinventoryItems) {
-    const results = [];
-    for (const element of listinventoryItems) {
-        const newinventoryItem = await inventoryItem.create(element);
-        results.push(newinventoryItem);
-    }
-    results.save();
-    return results;
+  static async createinventoryItems({inventoryItem_name, inventoryItem_quantity, inventoryItem_exp, cost}) {
+    const newinventoryItem = await inventoryItem.create({inventoryItem_name, inventoryItem_quantity, inventoryItem_exp, cost});
+    return newinventoryItem;
   }
   static async getAllinventoryItem(){
     return inventoryItem.find()

@@ -10,23 +10,19 @@ const inventoryLeaveVoucherSchema = new Schema(
             ref: "user",
             required: true,
         },
-        time:{
-            type: String,
-            required: true,
-        },
         leave_list: [{
             inventoryItem:{
                 type: Schema.Types.ObjectId,
                 ref: "inventoryItem",
-                required: true,
             },
             quantity: {
                 type: Number,
-                required: true,
+            },
+            cost:{
+                type: Number,
             },
             price: {
                 type: Number,
-                required: true
             }
         }]
         

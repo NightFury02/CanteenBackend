@@ -1,13 +1,23 @@
-import report from "../report.model.js";
-
-const findReportByTime = async(Time) => {
-    return report.findOne({
-        time: Time
+import dInventoryReport from "../inventoryDReport.model.js";
+import dIncomeReport from "../incomeDReport.model.js"
+const findInvReportByTime = async(Time) => {
+    return dInventoryReport.findOne({
+        createdAt: Time
     });
 };
-const findReportByUser = async(userId) => {
-    return report.findOne({
+const findInvReportByUser = async(userId) => {
+    return dInventoryReport.findOne({
         user_id: userId
     });
 };
-export {findReportByTime, findReportByUser}
+const findIncReportByTime = async(Time) => {
+    return dIncomeReport.findOne({
+        createdAt: Time
+    });
+};
+const findIncReportByUser = async(userId) => {
+    return dIncomeReport.findOne({
+        user_id: userId
+    });
+};
+export {findInvReportByTime, findInvReportByUser, findIncReportByTime, findIncReportByUser }

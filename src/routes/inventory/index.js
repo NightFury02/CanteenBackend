@@ -14,7 +14,7 @@ inventoryItemsRoute.post(
   asyncHandler(inventoryItemController.createinventoryItems)
 );
 inventoryItemsRoute.get(
-  "/:all", asyncHandler(inventoryItemController.getAllinventoryItem)
+  "/all", asyncHandler(inventoryItemController.getAllinventoryItem)
 )
 
 inventoryItemsRoute.patch(

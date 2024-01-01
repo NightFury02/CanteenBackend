@@ -10,12 +10,9 @@ const inventoryDeleteVoucherSchema = new Schema(
             ref: "user",
             required: true,
         },
-        time: {
-            type: String,
-            required: true,
-        },
         delete_list: [
             {
+
                 inventoryItem: {
                     type: String,
                     required: true,

@@ -3,7 +3,7 @@ import inventoryItemService from "../services/inventoryItem.service.js";
 
 class inventoryItemController {
   static async createinventoryItems(req, res) {
-    const results = await inventoryItemService.createinventoryItems(req.body.listinventoryItems);
+    const results = await inventoryItemService.createinventoryItems(req.body);
 
     new SuccessResponse({
       message: "Created inventoryItems successfully!",
