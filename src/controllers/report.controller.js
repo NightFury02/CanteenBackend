@@ -35,5 +35,21 @@ class ReportController {
             data,
         }).send(res);
     }
+    static async getAllDIncReport(req, res) {
+        const data = await ReportService.getAllDIncReport();
+
+        new SuccessResponse({
+            message: "Got All Inventory Report !",
+            data,
+        }).send(res);
+    }
+    static async getDIncReport(req, res) {
+        const data = await ReportService.getDInvReport(req.Time);
+
+        new SuccessResponse({
+            message: "Detail Inventory Report !",
+            data,
+        }).send(res);
+    }
 }
 export default ReportController;

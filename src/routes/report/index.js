@@ -23,4 +23,9 @@ reportRoute.get(
     checkRole(["staff"]),
     asyncHandler(ReportController.getAllDInvReport)
 );
+reportRoute.get(
+    "/incomeD/all",
+    checkRole(["staff"]),
+    asyncHandler(ReportController.getAllDIncReport)
+);
 export default reportRoute;

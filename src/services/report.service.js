@@ -81,11 +81,11 @@ class ReportService {
             loss_money: 0
         });
     }
-    // static async getAllDInCReport() {
-    //     return await report.find();
-    // }
-    // static async getDInCReport(Time) {
-    //     return await findIncReportByTime(Time)
-    // }
+    static async getAllDIncReport() {
+        return await dIncomeReport.find();
+    }
+    static async getDInCReport(Time) {
+        return await findIncReportByTime(Time)
+    }
 }
 export default ReportService;
