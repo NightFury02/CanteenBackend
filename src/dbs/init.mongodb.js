@@ -2,16 +2,15 @@ import mongoose from 'mongoose';
 import config from "../configs/config.mongodb.js";
 import { countConnect } from "../helpers/check.connect.js";
 
-const {
-  // db: { user, password, dbname },
-  db: { host, port, name },
-} = config;
-const connectString = `mongodb://${host}:${port}/${name}`;
-
 // const {
-//   db: { user, password, dbname },
+//   db: { host, port, name },
 // } = config;
-// const connectString = `mongodb+srv://${user}:${password}@canteenmanagement.qbhpovo.mongodb.net/${dbname}?retryWrites=true&w=majority`
+// const connectString = `mongodb://${host}:${port}/${name}`;
+
+const {
+  db: { user, password, dbname },
+} = config;
+const connectString = `mongodb+srv://${user}:${password}@canteenmanagement.qbhpovo.mongodb.net/${dbname}?retryWrites=true&w=majority`
 
 class Database {
   constructor() {

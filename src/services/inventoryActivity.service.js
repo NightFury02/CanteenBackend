@@ -15,7 +15,6 @@ class inventoryActivityService {
         const { userId, item_list} = infoCvoucher;
         const newComeVoucher = await inventoryComeVoucher.create({
             user_id: convertToObjectId(userId),
-            come_list:{ type: Array, default: [] }
         });
         for (let item of item_list) {
             const newInventoryItem = await inventoryItem.create({
@@ -24,7 +23,12 @@ class inventoryActivityService {
                 inventoryItem_exp: item.inventoryItem_exp,
                 cost: item.cost
             });
-            newComeVoucher.come_list.push(newInventoryItem);
+            newComeVoucher.come_list.push({
+                inventoryItem_name: item.inventoryItem_name,
+                inventoryItem_quantity: item.inventoryItem_quantity,
+                inventoryItem_exp: item.inventoryItem_exp,
+                cost: item.cost
+            });
         }
         await newComeVoucher.save();
         return newComeVoucher;
@@ -37,7 +41,6 @@ class inventoryActivityService {
         const { userId, item_list } = infoLvoucher;
         const leaveItemAct = await inventoryLeaveVoucher.create({
             user_id: convertToObjectId(userId),
-            leave_list:{ type: Array}
         });
         for (let element of item_list) {
             const invenItem = await findinventoryItemById(convertToObjectId(element.inventoryItem));
@@ -71,7 +74,6 @@ class inventoryActivityService {
         const { userId, item_list } = infoDvoucher;
         const deleteItemAct = await inventoryDeleteVoucher.create({
             user_id: convertToObjectId(userId),
-            delete_list:{ type: Array, default: [] }
         });
         for(let item of item_list){
             var deleteItem = await findinventoryItemById(item.inventoryItem);
